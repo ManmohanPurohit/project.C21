@@ -1,44 +1,30 @@
+var canvas, backgroundImage;
 
-const Engine = Matter.Engine;
-const World = Matter.World;
-const Bodies = Matter.Bodies;
-const Body = Matter.Body;
-var ball
-function preload()
-{
-	
-}
+var gameState = 0;
+var contestantCount;
+var allContestants;
+var answer;
+var database;
 
-function setup() {
-	createCanvas(1600, 700);
+var question, contestant, quiz;
 
 
-	engine = Engine.create();
-	world = engine.world;
-
-	//Create the Bodies Here.
-	var ball_options={
-		isStatic: false,
-		restitution: 0.3,
-		friction: 0,
-		density:1.2
-	}
-	ball= Bodies.circle(260,100,radius/2,ball_options);
-	World.add(world,ball);
-
-
-	Engine.run(engine);
-  
+function setup(){
+  canvas = createCanvas(850,400);
+  database = firebase.database();
+  quiz = new Quiz();
+  quiz.getState();
+  quiz.start();
 }
 
 
-function draw() {
-  rectMode(CENTER);
-  background(0);
-  
-  drawSprites();
- 
+function draw(){
+  background("pink");
+  if(contestantCount === 2){
+    quiz.update(1);
+  }
+  if(gameState === 1){
+    clear();
+    quiz.play();
+  }
 }
-
-
-
